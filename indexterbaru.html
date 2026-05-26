@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Website Kota Salatiga</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --pink: #f472a8;
+        --pink-light: #fce4ee;
+        --pink-dark: #e05090;
+        --pink-mid: #c94f82;
+        --bg: #fff5f7;
+        --white: #ffffff;
+        --text: #3a3a3a;
+        --muted: #666;
+        --border: #fce4ee;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Nunito", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      nav {
+        background: var(--pink);
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        padding: 1rem 2.5rem;
+        position: sticky;
+        top: 0;
+        z-index: 200;
+        box-shadow: 0 2px 12px rgba(244, 114, 168, 0.3);
+        gap: 1rem;
+      }
+      .nav-brand {
+        color: white;
+        font-size: 0.95rem;
+        font-weight: 800;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .nav-links {
+        display: flex;
+        gap: 1.6rem;
+        justify-content: center;
+      }
+      .nav-links a {
+        color: rgba(255, 255, 255, 0.85);
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: color 0.2s;
+        padding-bottom: 2px;
+        border-bottom: 2px solid transparent;
+        white-space: nowrap;
+      }
+      .nav-links a:hover {
+        color: white;
+        border-color: white;
+      }
+      .nav-right {
+        display: flex;
+        justify-content: flex-end;
+      }
+      .nav-search {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .nav-search input {
+        padding: 0.4rem 0.9rem;
+        border: none;
+        border-radius: 2rem;
+        font-family: "Nunito", sans-serif;
+        font-size: 0.82rem;
+        outline: none;
+        width: 150px;
+        transition: width 0.3s;
+      }
+      .nav-search input:focus {
+        width: 190px;
+      }
+      .nav-search button {
+        padding: 0.4rem 1rem;
+        background: white;
+        color: var(--pink);
+        border: none;
+        border-radius: 2rem;
+        font-family: "Nunito", sans-serif;
+        font-size: 0.82rem;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      .nav-search button:hover {
+        background: var(--pink-light);
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        background: white;
+        color: var(--text);
+        border: 1.5px solid var(--border);
+        border-radius: 2rem;
+        padding: 0.75rem 2rem;
+        font-size: 0.9rem;
+        font-weight: 700;
+        box-shadow: 0 8px 30px rgba(244, 114, 168, 0.25);
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.3s,
+          transform 0.3s;
+        z-index: 999;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      .hero {
+        position: relative;
+        height: 500px;
+        overflow: hidden;
+      }
+      .hero img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, rgba(244, 114, 168, 0.3), rgba(0, 0, 0, 0.45));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .hero-text {
+        text-align: center;
+        color: white;
+      }
+      .hero-text h1 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+      .hero-text p {
+        font-size: 1rem;
+        opacity: 0.9;
+      }
+
+      .sec {
+        padding: 2.5rem 4rem;
+      }
+      .sec:nth-child(odd) {
+        background: var(--white);
+      }
+      .sec:nth-child(even) {
+        background: var(--bg);
+      }
+      h2 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--pink-dark);
+        margin-bottom: 1.2rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--border);
+      }
+
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+      }
+      .stat-card {
+        background: var(--white);
+        border: 1.5px solid var(--border);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+      }
+      .stat-icon {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+      }
+      .stat-num {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--pink-dark);
+      }
+      .stat-label {
+        font-size: 0.78rem;
+        color: var(--muted);
+        margin-top: 0.2rem;
+        font-weight: 600;
+      }
+
+      .peta-wrap {
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1.5px solid var(--border);
+      }
+      .peta-wrap iframe {
+        width: 100%;
+        height: 460px;
+        display: block;
+        border: none;
+      }
+
+      .about-text p {
+        font-size: 0.9rem;
+        line-height: 1.85;
+        color: var(--muted);
+        margin-bottom: 1rem;
+        text-align: justify;
+      }
+      .about-text p:last-child {
+        margin-bottom: 0;
+      }
+
+      .gallery-grid,
+      .kuliner-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.2rem;
+      }
+      .gallery-card,
+      .kuliner-card {
+        border: 1.5px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        background: var(--white);
+        transition:
+          transform 0.2s,
+          border-color 0.2s;
+      }
+      .gallery-card:hover,
+      .kuliner-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--pink);
+      }
+      .gallery-card img {
+        width: 100%;
+        height: 175px;
+        object-fit: cover;
+        display: block;
+      }
+      .gallery-body,
+      .kuliner-body {
+        padding: 0.9rem 1rem;
+      }
+      .gallery-name,
+      .kuliner-name {
+        font-size: 0.92rem;
+        font-weight: 700;
+        color: var(--pink-dark);
+        margin-bottom: 0.3rem;
+        text-align: center;
+      }
+      .gallery-desc,
+      .kuliner-desc {
+        font-size: 0.8rem;
+        color: var(--muted);
+        line-height: 1.6;
+        text-align: justify;
+      }
+      .kuliner-img {
+        width: 100%;
+        height: 155px;
+        object-fit: cover;
+        display: block;
+        background: var(--pink-light);
+      }
+      .kuliner-img-placeholder {
+        width: 100%;
+        height: 155px;
+        background: var(--pink-light);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        color: var(--pink-mid);
+      }
+      .kuliner-img-placeholder .ph-icon {
+        font-size: 2.2rem;
+      }
+      .kuliner-img-placeholder .ph-text {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        opacity: 0.7;
+      }
+
+      footer {
+        background: var(--pink);
+        color: rgba(255, 255, 255, 0.9);
+        text-align: center;
+        padding: 1.3rem;
+        font-size: 0.85rem;
+      }
+
+      .back-btn {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: var(--pink);
+        color: white;
+        text-decoration: none;
+        padding: 0.7rem 1.3rem;
+        border-radius: 2rem;
+        font-size: 0.82rem;
+        font-weight: 700;
+        box-shadow: 0 4px 16px rgba(244, 114, 168, 0.4);
+        transition:
+          opacity 0.2s,
+          transform 0.2s;
+        z-index: 100;
+      }
+      .back-btn:hover {
+        opacity: 0.85;
+        transform: translateY(-2px);
+      }
+
+      @keyframes highlightFade {
+        0% {
+          background-color: #f472a8;
+          color: #fff;
+          border-radius: 3px;
+        }
+        40% {
+          background-color: #fce4ee;
+          color: var(--text);
+          border-radius: 3px;
+        }
+        100% {
+          background-color: transparent;
+          color: inherit;
+          border-radius: 3px;
+        }
+      }
+      mark.search-highlight {
+        background-color: transparent;
+        color: inherit;
+        padding: 0 2px;
+        border-radius: 3px;
+        animation: highlightFade 2.8s ease forwards;
+      }
+
+      @media (max-width: 900px) {
+        nav {
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: auto auto;
+        }
+        .nav-links {
+          grid-column: 1/-1;
+          justify-content: center;
+          gap: 1rem;
+          flex-wrap: wrap;
+        }
+        .nav-right {
+          grid-column: 2;
+        }
+        .sec {
+          padding: 2rem 1.5rem;
+        }
+        .stat-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .gallery-grid,
+        .kuliner-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .hero-text h1 {
+          font-size: 1.8rem;
+        }
+      }
+      @media (max-width: 600px) {
+        .gallery-grid,
+        .kuliner-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="toast" id="toast"></div>
+
+    <nav>
+      <a class="nav-brand" href="#">Beranda</a>
+      <div class="nav-links">
+        <a href="#statistik">Statistik</a>
+        <a href="#peta">Peta</a>
+        <a href="#sejarah">Sejarah</a>
+        <a href="#galery">Galeri & Wisata</a>
+        <a href="#kuliner">Kuliner</a>
+      </div>
+      <div class="nav-right">
+        <div class="nav-search">
+          <input type="search" id="searchInput" placeholder="Cari..." onkeydown="if (event.key === 'Enter') doSearch();" />
+          <button onclick="doSearch()">Cari</button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <img src="tugu salatiga.jpg" alt="Tugu Salatiga" onerror="this.style.background = '#f9b8d0'" />
+      <div class="hero-overlay">
+        <div class="hero-text">
+          <h1>Kota Salatiga</h1>
+          <p>Kota Sejuk di Jantung Jawa Tengah</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec" id="statistik">
+      <h2>Salatiga dalam Angka</h2>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div class="stat-num">198.370</div>
+          <div class="stat-label">Jumlah Penduduk (2024)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🏘️</div>
+          <div class="stat-num">4</div>
+          <div class="stat-label">Kecamatan</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🏠</div>
+          <div class="stat-num">23</div>
+          <div class="stat-label">Kelurahan</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📐</div>
+          <div class="stat-num">56,78</div>
+          <div class="stat-label">Luas Wilayah (km²)</div>
+        </div>
+      </div>
+      <div style="margin-top: 2rem">
+        <h2 style="font-size: 1rem; font-weight: 700; color: var(--pink-dark); margin-bottom: 0.8rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--border)">Piramida Penduduk (2024)</h2>
+        <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 1rem">Sumber: BPS Kota Salatiga, 2024</p>
+        <div style="position: relative; width: 100%; height: 380px"><canvas id="pyramidChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="sec" id="peta">
+      <h2>Peta Kota Salatiga</h2>
+      <div class="peta-wrap"><iframe src="indexpeta.html"></iframe></div>
+    </div>
+
+    <div class="sec" id="sejarah">
+      <h2>Sejarah Salatiga</h2>
+      <div class="about-text">
+        <p>
+          Kota Salatiga adalah kota di Provinsi Jawa Tengah, Indonesia, yang menjadi enklave dari Kabupaten Semarang. Kota Salatiga terletak 49 kilometer di sebelah Selatan Kota Semarang dan 52 kilometer di sebelah Utara Kota Surakarta,
+          serta berada di jalan negara yang menghubungkan antara Kabupaten Semarang dengan Kota Surakarta. Jumlah penduduk kota Salatiga tahun 2024 berjumlah 198.370 jiwa.
+        </p>
+        <p>
+          Wilayah Salatiga menempati letak posisi yang sangat strategis karena berada pada persilangan jalan raya dari enam jurusan, yaitu Semarang, Bringin, Sragen, Surakarta, Magelang, dan Ambarawa. Pada saat ini, Salatiga terdiri atas
+          empat kecamatan (Argomulyo, Sidomukti, Sidorejo, dan Tingkir) dan 23 kelurahan (Blotongan, Bugel, Cebongan, Dukuh, Gendongan, Kalibening, Kalicacing, Kauman Kidul, Kecandran, Kumpulrejo, Kutowinangun Kidul, Kutowinangun Lor,
+          Ledok, Mangunsari, Noborejo, Pulutan, Randuacir, Salatiga, Sidorejo Kidul, Sidorejo Lor, Tegalrejo, Tingkir Lor, dan Tingkir Tengah).
+        </p>
+        <p>
+          Pada tahun 1895 Salatiga digabung dengan Kabupaten Semarang berdasarkan Staatsblad No. 35 tanggal 13 Februari 1895. Menjelang akhir 1901 Salatiga sebagai afdeling kontrol dihapuskan dan digabungkan dengan Ambarawa. Berselang dua
+          tahun kemudian, Salatiga secara resmi dipimpin oleh asisten residen. Afdeling Salatiga dibagi menjadi dua afdeling kontrol, yaitu Salatiga dan Ambarawa. Salatiga membawahi Distrik Salatiga dan Distrik Tengaran, sedangkan Ambarawa
+          membawahi Distrik Ambarawa dan Distrik Ungaran. Pada perkembangannya, Salatiga beralih status menjadi stadsgameente setelah dikeluarkannya Surat Keputusan Gubernur Jenderal Hindia Belanda tanggal 25 Juni 1917 No. 1 yang dimuat
+          dalan Staatsblad No. 226 tahun 1917. Status staadsgementee meningkat menjadi gemeente pada tahun 1926. Adapun daerah yang dapat ditetapkan sebagai daerah otonom adalah kota yang mempunyai sifat kebaratan, banyak penduduk Eropa dan
+          di sekitarnya harus ada perkebunan. Peningkatan status Salatiga sebagai gameente sempat dipertanyakan karena penduduknya yang sedikit dan wilayahnya yang kecil. Meski penetepan ini bernuasna politik untuk kepentigan orang kulit
+          putih, tetapi Salatiga sebenarnya telah memenuhi syarat sebagai gameente, yaitu: penduduk, keadaan setempat dan keuangan.Dari faktor penduduk, jumlah penduduk kulit putih di Salatiga pada saat itu mencapai kurang lebih 17 persen.
+          Hal ini sudah memenuhi persyaratan untuk menjadi sebuah gameente yang menetapkan minimal penduduk kulit putih (Eropa maupun etnis lain) adalah 10 persen. Salatiga yang pada saat itu masih dipenuhi perkebunan-perkebunan menjadi
+          pertimbangan peningkatan status menjadi gameente. Hal ini terkait dengan kedaadan setempat yang dapat menunjang perkembangan gameente nantinya. Faktor keuangan terutama berkaitan dengan perpajakan, Salatiga dianggap sudah bisa
+          memenuhinya.
+        </p>
+      </div>
+    </div>
+
+    <div class="sec" id="galery">
+      <h2>Galeri & Wisata Kota Salatiga</h2>
+      <div class="gallery-grid">
+        <div class="gallery-card">
+          <img src="alun2.jpg" alt="Alun-Alun Salatiga" onerror="this.style.background = '#fce4ee'" />
+          <div class="gallery-body">
+            <div class="gallery-name">Alun-Alun Salatiga</div>
+            <div class="gallery-desc">Salatiga adalah tempat di mana budaya dan sejarah bertemu, Lapangan Pancasila Alun-Alun Kota Salatiga adalah simbol keharmonisan ini.</div>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img src="tugu salatiga.jpg" alt="Tugu Jam Tamansari" onerror="this.style.background = '#fce4ee'" />
+          <div class="gallery-body">
+            <div class="gallery-name">Tugu Jam Tamansari</div>
+            <div class="gallery-desc">Ikon kota Salatiga berupa tugu jam bersejarah yang terletak di pusat kota, menjadi salah satu landmark paling dikenal dan sering dijadikan spot foto.</div>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img src="tol.jpg" alt="Gerbang Tol Salatiga" onerror="this.style.background = '#fce4ee'" />
+          <div class="gallery-body">
+            <div class="gallery-name">Gerbang Tol Salatiga</div>
+            <div class="gallery-desc">Pintu masuk kota Salatiga dari Jalan Tol Trans Jawa, yang terkenal sebagai gerbang tol terindah dengan pemandangan Gunung Merbabu.</div>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img src="restarea.jpg" alt="Rest Area Salatiga" onerror="this.style.background = '#fce4ee'" />
+          <div class="gallery-body">
+            <div class="gallery-name">Rest Area Salatiga</div>
+            <div class="gallery-desc">Rest Area terbesar di Indonesia, Pendopo KM 456 Salatiga punya beberapa gerai ritel bermerek, dan tempat makan yang berada di pusat Ibu Kota.</div>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img src="monginsidi.jpg" alt="Jalan Monginsidi" onerror="this.style.background = '#fce4ee'" />
+          <div class="gallery-body">
+            <div class="gallery-name">Jalan Monginsidi</div>
+            <div class="gallery-desc">Salah satu jalan utama di Salatiga yang ramai dan terkenal dengan deretan toko, café, dan pusat kuliner dengan pemandangan Gunung Merbabu.</div>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img src="uksw.jpg" alt="Universitas Kristen Satya Wacana" onerror="this.style.background = '#fce4ee'" />
+          <div class="gallery-body">
+            <div class="gallery-name">Universitas Kristen Satya Wacana</div>
+            <div class="gallery-desc">Universitas swasta bergengsi yang menjadi kebanggaan kota Salatiga, dikenal dengan mahasiswanya yang berasal dari berbagai daerah di seluruh Indonesia.</div>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img src="plumpungan.jpg" alt="Prasasti Plumpungan" onerror="this.style.background = '#fce4ee'" />
+          <div class="gallery-body">
+            <div class="gallery-name">Prasasti Plumpungan</div>
+            <div class="gallery-desc">Peninggalan sejarah berupa batu bertulis dari abad ke-9 yang menjadi bukti asal-usul kota Salatiga, kini disimpan dan dijaga sebagai cagar budaya.</div>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img src="saloka.jpg" alt="Wisata Saloka" onerror="this.style.background = '#fce4ee'" />
+          <div class="gallery-body">
+            <div class="gallery-name">Wisata Saloka</div>
+            <div class="gallery-desc">Taman hiburan keluarga terbesar di Jawa Tengah dengan berbagai wahana seru dan area bermain air yang menyenangkan untuk semua usia.</div>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img src="rawapening.jpg" alt="Rawa Pening" onerror="this.style.background = '#fce4ee'" />
+          <div class="gallery-body">
+            <div class="gallery-name">Wisata Rawa Pening</div>
+            <div class="gallery-desc">Danau alami seluas 2.670 hektar dengan pemandangan Gunung Merbabu dan Gunung Telomoyo, cocok untuk wisata alam dan naik perahu.</div>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img src="senjoyo.jpg" alt="Mata Air Senjoyo" onerror="this.style.background = '#fce4ee'" />
+          <div class="gallery-body">
+            <div class="gallery-name">Wisata Mata Air Senjoyo</div>
+            <div class="gallery-desc">Sumber mata air alami yang jernih dan menyegarkan, dikelilingi pepohonan rindang dan suasana alam yang tenang dan asri.</div>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img src="pohonp.jpg" alt="Pohon Pengantin" onerror="this.style.background = '#fce4ee'" />
+          <div class="gallery-body">
+            <div class="gallery-name">Wisata Pohon Pengantin</div>
+            <div class="gallery-desc">Spot wisata unik dengan dua pohon besar yang tumbuh berdampingan dan saling melilit, menjadi ikon romantis kota Salatiga.</div>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img src="kaliodo.jpg" alt="Wisata Kali Odo" onerror="this.style.background = '#fce4ee'" />
+          <div class="gallery-body">
+            <div class="gallery-name">Wisata Kali Odo</div>
+            <div class="gallery-desc">Wisata sungai yang menawarkan aktivitas tubing dan susur sungai dengan pemandangan alam pedesaan yang asri dan menyegarkan.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec" id="kuliner">
+      <h2>Kuliner Khas Kota Salatiga</h2>
+      <div class="kuliner-grid">
+        <div class="kuliner-card">
+          <img class="kuliner-img" src="sate.jpg" alt="Sate Sapi Suruh" onerror="this.outerHTML = '<div class=\'kuliner-img-placeholder\'><div class=\'ph-icon\'>🍢</div><div class=\'ph-text\'>Tambahkan foto: sate.jpg</div></div>'" />
+          <div class="kuliner-body">
+            <div class="kuliner-name">Sate Sapi Suruh</div>
+            <div class="kuliner-desc">Sate sapi khas Salatiga yang terkenal dengan bumbu kacang spesial dan dagingnya yang empuk. Sajian wajib saat berkunjung ke Salatiga.</div>
+          </div>
+        </div>
+        <div class="kuliner-card">
+          <img class="kuliner-img" src="soto.jpg" alt="Soto Esto" onerror="this.outerHTML = '<div class=\'kuliner-img-placeholder\'><div class=\'ph-icon\'>🥣</div><div class=\'ph-text\'>Tambahkan foto: soto.jpg</div></div>'" />
+          <div class="kuliner-body">
+            <div class="kuliner-name">Soto Esto</div>
+            <div class="kuliner-desc">Soto Esto adalah soto bersantan dengan warna kekuningan karena menggunakan kunyit. Kuahnya bercita rasa gurih dengan rasa rempah yang kuat.</div>
+          </div>
+        </div>
+        <div class="kuliner-card">
+          <img class="kuliner-img" src="gethuk.jpg" alt="Gethuk Kethek" onerror="this.outerHTML = '<div class=\'kuliner-img-placeholder\'><div class=\'ph-icon\'>🍰</div><div class=\'ph-text\'>Tambahkan foto: gethuk.jpg</div></div>'" />
+          <div class="kuliner-body">
+            <div class="kuliner-name">Gethuk Kethek</div>
+            <div class="kuliner-desc">Jajanan tradisional berbahan dasar singkong yang legit dan manis. Nama uniknya menjadi daya tarik tersendiri bagi wisatawan.</div>
+          </div>
+        </div>
+        <div class="kuliner-card">
+          <img
+            class="kuliner-img"
+            src="singkong2.jpg"
+            alt="Singkong Keju D-9"
+            onerror="this.outerHTML = '<div class=\'kuliner-img-placeholder\'><div class=\'ph-icon\'>🌽</div><div class=\'ph-text\'>Tambahkan foto: singkong.jpg</div></div>'"
+          />
+          <div class="kuliner-body">
+            <div class="kuliner-name">Singkong Keju D-9</div>
+            <div class="kuliner-desc">Singkong Keju D9 Khas Salatiga merupakan inovasi singkong original empuk yang diolah dengan bumbu yang dicampur keju.</div>
+          </div>
+        </div>
+        <div class="kuliner-card">
+          <img
+            class="kuliner-img"
+            src="ronde.jpg"
+            alt="Wedang Ronde Mak Pari"
+            onerror="this.outerHTML = '<div class=\'kuliner-img-placeholder\'><div class=\'ph-icon\'>🍵</div><div class=\'ph-text\'>Tambahkan foto: ronde.jpg</div></div>'"
+          />
+          <div class="kuliner-body">
+            <div class="kuliner-name">Wedang Ronde Mak Pari</div>
+            <div class="kuliner-desc">Minuman hangat khas Salatiga berisi bola-bola ketan berisi kacang dengan kuah jahe manis, sangat cocok di cuaca sejuk kota ini.</div>
+          </div>
+        </div>
+        <div class="kuliner-card">
+          <img
+            class="kuliner-img"
+            src="enting.jpg"
+            alt="Enting-Enting Gepuk"
+            onerror="this.outerHTML = '<div class=\'kuliner-img-placeholder\'><div class=\'ph-icon\'>🥮</div><div class=\'ph-text\'>Tambahkan foto: enting.jpg</div></div>'"
+          />
+          <div class="kuliner-body">
+            <div class="kuliner-name">Enting-Enting Gepuk</div>
+            <div class="kuliner-desc">Enting enting gepuk merupakan makanan ringan terbuat dari kacang tanah, gula pasir, air, dan vanili. Berbentuk prisma segitiga sama kaki dan dibungkus dengan kertas.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer><p>Ikhlima Nuranida Zannuba &nbsp;·&nbsp; Universitas Gadjah Mada</p></footer>
+
+    <script>
+      document.querySelectorAll('nav a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          document.querySelector(a.getAttribute("href"))?.scrollIntoView({ behavior: "smooth" });
+        });
+      });
+
+      function showToast(msg) {
+        const t = document.getElementById("toast");
+        t.textContent = msg;
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 3000);
+      }
+
+      function clearHighlights() {
+        document.querySelectorAll("mark.search-highlight").forEach((mark) => {
+          mark.parentNode.replaceChild(document.createTextNode(mark.textContent), mark);
+          mark.parentNode?.normalize();
+        });
+      }
+
+      function highlightInElement(el, q) {
+        const nodes = [];
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+        let node;
+        while ((node = walker.nextNode())) nodes.push(node);
+        nodes.forEach((textNode) => {
+          const idx = textNode.nodeValue.toLowerCase().indexOf(q.toLowerCase());
+          if (idx === -1) return;
+          const mark = document.createElement("mark");
+          mark.className = "search-highlight";
+          mark.textContent = textNode.nodeValue.slice(idx, idx + q.length);
+          const frag = document.createDocumentFragment();
+          if (idx) frag.appendChild(document.createTextNode(textNode.nodeValue.slice(0, idx)));
+          frag.appendChild(mark);
+          if (idx + q.length < textNode.nodeValue.length) frag.appendChild(document.createTextNode(textNode.nodeValue.slice(idx + q.length)));
+          textNode.parentNode.replaceChild(frag, textNode);
+        });
+      }
+
+      function doSearch() {
+        const q = document.getElementById("searchInput").value.trim();
+        if (!q) return;
+        clearHighlights();
+        let firstFound = null;
+        document.querySelectorAll("h2, p, .gallery-name, .gallery-desc, .kuliner-name, .kuliner-desc, .stat-label").forEach((el) => {
+          if (el.textContent.toLowerCase().includes(q.toLowerCase())) {
+            highlightInElement(el, q);
+            if (!firstFound) firstFound = el;
+          }
+        });
+        if (firstFound) {
+          firstFound.scrollIntoView({ behavior: "smooth", block: "center" });
+          setTimeout(clearHighlights, 3000);
+        } else {
+          showToast("😔 Tidak ditemukan: " + q);
+        }
+      }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <script>
+      new Chart(document.getElementById("pyramidChart"), {
+        type: "bar",
+        data: {
+          labels: ["75+", "70–74", "65–69", "60–64", "55–59", "50–54", "45–49", "40–44", "35–39", "30–34", "25–29", "20–24", "15–19", "10–14", "5–9", "0–4"],
+          datasets: [{ label: "Penduduk", data: [5480, 5270, 7950, 9750, 12180, 12990, 15120, 16660, 13920, 14390, 14360, 14420, 15610, 15430, 14330, 10510], backgroundColor: "#f472a8", borderRadius: 3, borderSkipped: false }],
+        },
+        options: {
+          indexAxis: "y",
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false }, tooltip: { callbacks: { label: (ctx) => " " + ctx.parsed.x.toLocaleString("id-ID") + " jiwa" } } },
+          scales: {
+            x: { ticks: { font: { size: 11 }, color: "#888", callback: (v) => (v / 1000).toFixed(0) + "rb" }, grid: { color: "rgba(0,0,0,0.06)" } },
+            y: { ticks: { font: { size: 11 }, color: "#888" }, grid: { display: false } },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+{
+  "KEYFRAMES": {
+    "camera": {
+      "groups": []
+    },
+    "layers": {
+      "Salatiga_e2ea0e37_458f_427b_81ed_0323abae0a7e": {
+        "enabled": true,
+        "groups": []
+      },
+      "fp:104b3258": {
+        "enabled": true,
+        "groups": []
+      },
+      "kepadatan_Kota_Salatiga_48cbd2d3_1ff0_410b_90aa_caf640746222": {
+        "enabled": true,
+        "groups": []
+      },
+      "salatiga_data__1__f1e179b1_71ac_4381_9b8b_eb4023108797": {
+        "enabled": true,
+        "groups": []
+      },
+      "salatiga_data_gpkg_6ea51b10_49d9_4b86_afc7_3febfd5019d9": {
+        "enabled": true,
+        "groups": []
+      }
+    },
+    "repeat": false
+  },
+  "LAYERS": [
+    {
+      "geomType": 1,
+      "layerId": "salatiga_data_gpkg_6ea51b10_49d9_4b86_afc7_3febfd5019d9",
+      "name": "salatiga_data_gpkg",
+      "properties": {},
+      "visible": false
+    },
+    {
+      "geomType": 1,
+      "layerId": "salatiga_data__1__f1e179b1_71ac_4381_9b8b_eb4023108797",
+      "name": "salatiga_data (1)",
+      "properties": {},
+      "visible": false
+    },
+    {
+      "geomType": 3,
+      "layerId": "Salatiga_e2ea0e37_458f_427b_81ed_0323abae0a7e",
+      "name": "Salatiga",
+      "properties": {},
+      "visible": false
+    },
+    {
+      "geomType": 3,
+      "layerId": "kepadatan_Kota_Salatiga_48cbd2d3_1ff0_410b_90aa_caf640746222",
+      "name": "kepadatan Kota Salatiga",
+      "properties": {},
+      "visible": false
+    },
+    {
+      "geomType": 0,
+      "layerId": "fp:104b3258",
+      "name": "Flat Plane",
+      "properties": {},
+      "visible": false
+    }
+  ],
+  "Version": 20800
+}
